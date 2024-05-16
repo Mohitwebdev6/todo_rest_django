@@ -55,7 +55,10 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True         #it will allow everyone use our api
+
+# CORS_ALLOWED_ORIGINS=["example.com"]
+
 
 ROOT_URLCONF = 'todo.urls'
 
