@@ -1,3 +1,4 @@
+from datetime import date
 from .models import Todo
 from .serializers import TodoSerializers
 from rest_framework.decorators import api_view
@@ -16,7 +17,7 @@ def todo(request):
         return Response(serializers.data,status=status.HTTP_400_BAD_REQUEST)
     
     elif request.method == "GET":
-        todos=Todo.objects.all()
+        todos=Todo.objects.all().order_by("-created_at")
         serializers= TodoSerializers(todos,many=True)
         return Response(serializers.data,status=status.HTTP_200_OK)
         

@@ -1,13 +1,27 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 
-export default function Main({ item, formattedDate }) {
+export default function Main({ item, formattedDate,setDeleted }) {
   
   const [disable, setDisable] = useState(true)
   const [data, setData] = useState({ "title": item.title, "description": item.description, "is_completed": item.is_completed })
 
   const toggleComplete = () => {
     setData(prev => ({ ...prev, "is_completed": !prev.is_completed }))
+  }
+
+  const deleteTodo =()=>{
+    fetch(`http://127.0.0.1:8000/api/v1/todo/${item.id}/`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+    }).then((res)=>{
+      setDeleted((prev)=>!prev)
+    })
+    .catch(err => {
+      console.log(err)
+    })
   }
 
   useEffect(() => {
@@ -48,6 +62,7 @@ export default function Main({ item, formattedDate }) {
       <h3>{formattedDate}</h3>
 
       <button className=" rounded-lg p-2 bg-blue-400 px-5 text-white" onClick={(e) => { toggleEdit(e) }}>Edit</button>
+      <button className=" rounded-lg p-2 bg-red-700 px-5 text-white" onClick={deleteTodo} >Delete</button>
     </li>
   );
 }
